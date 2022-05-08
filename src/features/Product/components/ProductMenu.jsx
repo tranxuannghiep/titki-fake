@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,27 +29,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductMenu() {
+export default function ProductMenu({ id }) {
   const classes = useStyles();
-  const { pathname } = useLocation();
-  console.log(pathname);
   return (
     <>
       <Box component="ul" className={classes.root}>
         <li>
-          <NavLink to={`${pathname}`} exact="true">
+          <NavLink to={`/products/${id}`} end>
             Description
           </NavLink>
         </li>
         <li>
-          <NavLink to={`${pathname}/additional`} exact="true">
-            Additional Infomation
-          </NavLink>
+          <NavLink to={`/products/${id}/additional`}>Additional Infomation</NavLink>
         </li>
         <li>
-          <NavLink to={`${pathname}/reviews`} exact="true">
-            Reviews
-          </NavLink>
+          <NavLink to={`/products/${id}/reviews`}>Reviews</NavLink>
         </li>
       </Box>
       <Outlet />

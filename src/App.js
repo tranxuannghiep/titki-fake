@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="products" element={<ProductFeature />}>
           <Route index element={<ListPage />} />
-          <Route path=":productId" element={<DetailPage />} />
+          <Route path=":productId/*" element={<DetailPage />} />
         </Route>
       </Routes>
     </ThemeProvider>

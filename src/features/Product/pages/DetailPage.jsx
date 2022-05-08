@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DetailPage() {
   const classes = useStyles();
-
   const { productId } = useParams();
   const { product, loading } = useProductDetail(productId);
   if (loading)
@@ -66,15 +65,11 @@ export default function DetailPage() {
           </Grid>
         </Paper>
 
-        {/* đang ở route /products/:id */}
         <Routes>
-          <Route path="/" element={<ProductMenu />}>
-            <Route index element={<ProductDescription product={product} />} />{' '}
-            {/*  ở route /products/:id hiện nội dung này */}
-            <Route path="/additional" element={<ProductAdditional />} />{' '}
-            {/*  ở route /products/:id/additional không hiện gì */}
-            <Route path="/reviews" element={<ProductReviews />} />{' '}
-            {/*  ở route /products/:id/reviews không hiện gì */}
+          <Route path="" element={<ProductMenu id={product.id} />}>
+            <Route index element={<ProductDescription product={product} />} />
+            <Route path="/additional" element={<ProductAdditional />} />
+            <Route path="/reviews" element={<ProductReviews />} />
           </Route>
         </Routes>
       </Container>
