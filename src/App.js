@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-
+import ProductFeature from './features/Product';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ListPage from './features/Product/pages/ListPage';
+import DetailPage from './features/Product/pages/DetailPage';
+const theme = createTheme();
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <h1>Header</h1>
+      <Routes>
+        <Route path="products" element={<ProductFeature />}>
+          <Route index element={<ListPage />} />
+          <Route path=":productId" element={<DetailPage />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 
