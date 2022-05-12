@@ -21,7 +21,12 @@ export default function FilterByService({ filters = {}, onChange }) {
   const handleChange = (e) => {
     if (!onChange) return;
     const { name, checked } = e.target;
-    onChange({ [name]: checked });
+    if (checked === false) {
+      delete filters[name];
+    } else {
+      filters[name] = true;
+    }
+    onChange(filters);
   };
 
   return (

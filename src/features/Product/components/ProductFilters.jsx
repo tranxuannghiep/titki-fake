@@ -13,6 +13,7 @@ export default function ProductFilters({ filters, onChange }) {
     onChange(newFilters);
   };
   const handleChange = (values) => {
+    console.log(values);
     if (onChange) onChange(values);
   };
   return (

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Box, Container, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import ProductThumbnail from '../components/ProductThumbnail';
-import useProductDetail from './../hooks/useProductDetail';
 import { useParams, Routes, Route } from 'react-router-dom';
 import ProductInfo from '../components/ProductInfo';
 import AddToCartForm from '../components/AddToCartForm';
@@ -10,6 +8,8 @@ import ProductMenu from './../components/ProductMenu';
 import ProductDescription from './../components/ProductDescription';
 import ProductAdditional from './../components/ProductAdditional';
 import ProductReviews from './../components/ProductReviews';
+import useProductDetail from '../hooks/useProductDetail';
+import ProductThumbnail from '../components/ProductThumbnail';
 
 const useStyles = makeStyles((theme) => ({
   root: {},

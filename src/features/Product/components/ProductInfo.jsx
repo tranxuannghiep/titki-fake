@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { formatPrice } from './../../../ultils/common';
+import { formatPrice } from 'ultils';
 
 const useStyles = makeStyles((theme) => ({
   root: {},

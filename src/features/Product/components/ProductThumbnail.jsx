@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { STATIC_HOST, THUMBNAIL_PLACEHOLDER } from './../../../constant';
+import { STATIC_HOST, THUMBNAIL_PLACEHOLDER } from 'constant';
 
 export default function ProductThumbnail({ product }) {
   const thumbnailUrl = product.thumbnail

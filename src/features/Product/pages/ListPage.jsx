@@ -1,15 +1,15 @@
 import { Box, Container, Grid, Pagination, Paper } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState, useMemo } from 'react';
-import productApi from '../../../api/productApi';
 import ProductFilters from '../components/ProductFilters';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
 import ProductList from './../components/ProductList';
 import FilterViewer from './../components/Filters/FilterViewer';
-import { useQuery } from './../../../hooks/useQuery';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
+import { useQuery } from 'hooks/useQuery';
+import productApi from 'api/productApi';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -37,6 +37,7 @@ function ListPage() {
 
   const queryParams = useMemo(() => {
     const params = queryString.parse(location.search);
+
     return {
       ...params,
       _page: params._page || 1,
@@ -116,6 +117,7 @@ function ListPage() {
                   count={Math.ceil(pagination.total / pagination.limit)}
                   color="primary"
                   onChange={handlePageChange}
+                  page={+queryParams._page || 1}
                 />
               </Box>
             </Paper>

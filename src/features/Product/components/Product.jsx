@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { STATIC_HOST, THUMBNAIL_PLACEHOLDER } from './../../../constant';
 import { Link } from 'react-router-dom';
-import { formatPrice } from '../../../ultils';
+import { STATIC_HOST, THUMBNAIL_PLACEHOLDER } from 'constant';
+import { formatPrice } from 'ultils';
 
 export default function Product({ product }) {
   const thumbnailUrl = product.thumbnail

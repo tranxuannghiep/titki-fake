@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Button } from '@mui/material';
-import QuantityFiled from './../../../components/form-controls/QuantityFiled/index';
+import QuantityFiled from 'components/form-controls/QuantityFiled';
 
 export default function AddToCartForm({ onSubmit = null }) {
   const schema = yup.object().shape({
