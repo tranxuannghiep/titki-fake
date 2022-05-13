@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import categoryApi from './../../../../api/categoryApi';
 import { makeStyles } from '@mui/styles';
 import FilterByCategorySkeleton from './FilterByCategorySkeleton';
+import categoryApi from 'api/categoryApi';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),

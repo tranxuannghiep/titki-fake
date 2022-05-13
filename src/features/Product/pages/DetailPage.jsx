@@ -4,12 +4,14 @@ import { makeStyles } from '@mui/styles';
 import { useParams, Routes, Route } from 'react-router-dom';
 import ProductInfo from '../components/ProductInfo';
 import AddToCartForm from '../components/AddToCartForm';
-import ProductMenu from './../components/ProductMenu';
-import ProductDescription from './../components/ProductDescription';
-import ProductAdditional from './../components/ProductAdditional';
-import ProductReviews from './../components/ProductReviews';
 import useProductDetail from '../hooks/useProductDetail';
 import ProductThumbnail from '../components/ProductThumbnail';
+import ProductDescription from '../components/ProductDescription';
+import ProductAdditional from '../components/ProductAdditional';
+import ProductMenu from '../components/ProductMenu';
+import ProductReviews from '../components/ProductReviews';
+import { useDispatch } from 'react-redux';
+import { addToCart } from 'redux/action/cartAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DetailPage() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { productId } = useParams();
   const { product, loading } = useProductDetail(productId);
   if (loading)
@@ -47,8 +50,9 @@ export default function DetailPage() {
       </Box>
     );
 
-  const handleAddtoCartSubmit = (formValues) => {
-    console.log('Form submit', formValues);
+  const handleAddtoCartSubmit = (values) => {
+    const { quantity } = values;
+    dispatch(addToCart({ ...product, quantity: quantity }));
   };
   return (
     <Box className={classes.root}>

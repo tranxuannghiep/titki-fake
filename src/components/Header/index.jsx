@@ -12,10 +12,11 @@ import { makeStyles } from '@mui/styles';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';
 import { useSelector, useDispatch } from 'react-redux';
-import { alpha, Menu, MenuItem, styled } from '@mui/material';
+import { alpha, Badge, Menu, MenuItem, styled } from '@mui/material';
 import { logout } from 'redux/action/userAction';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import InputBase from '@mui/material/InputBase';
 import { useSnackbar } from 'notistack';
 import queryString from 'query-string';
@@ -151,17 +152,23 @@ export default function Header() {
               defaultValue={queryString.parse(location.search).name_contains || ''}
             />
           </Search>
-
-          {!isLoggedIn && (
-            <Button onClick={handleClickOpen} color="inherit">
-              Login
-            </Button>
-          )}
-          {isLoggedIn && (
-            <IconButton color="inherit" onClick={handleUserClick}>
-              <AccountCircle />
+          <Box>
+            {!isLoggedIn && (
+              <Button onClick={handleClickOpen} color="inherit">
+                Login
+              </Button>
+            )}
+            {isLoggedIn && (
+              <IconButton color="inherit" onClick={handleUserClick}>
+                <AccountCircle />
+              </IconButton>
+            )}
+            <IconButton>
+              <Badge badgeContent={4} color="warning">
+                <ShoppingCartOutlinedIcon style={{ color: '#fff' }} />
+              </Badge>
             </IconButton>
-          )}
+          </Box>
         </Toolbar>
       </AppBar>
       <Menu

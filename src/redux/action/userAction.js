@@ -1,11 +1,12 @@
 import userApi from 'api/userApi';
 import StorageKeys from 'constant/storage-keys';
+import { LOGIN, LOGOUT, REGISTER } from 'redux/types';
 export const register = (payload) => async (dispatch) => {
   const data = await userApi.register(payload);
   localStorage.setItem(StorageKeys.TOKEN, data.jwt);
   localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
   dispatch({
-    type: 'user/register',
+    type: REGISTER,
     payload: data.user,
   });
 };
@@ -14,13 +15,13 @@ export const login = (payload) => async (dispatch) => {
   localStorage.setItem(StorageKeys.TOKEN, data.jwt);
   localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
   dispatch({
-    type: 'user/login',
+    type: LOGIN,
     payload: data.user,
   });
 };
 
 export const logout = () => {
   return {
-    type: 'user/logout',
+    type: LOGOUT,
   };
 };
