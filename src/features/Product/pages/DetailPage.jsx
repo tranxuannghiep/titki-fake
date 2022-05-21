@@ -12,6 +12,7 @@ import ProductMenu from '../components/ProductMenu';
 import ProductReviews from '../components/ProductReviews';
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'redux/action/cartAction';
+import { openToolTipCart } from 'redux/action/visibleAction';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DetailPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const { productId } = useParams();
   const { product, loading } = useProductDetail(productId);
   if (loading)
@@ -53,6 +55,7 @@ export default function DetailPage() {
   const handleAddtoCartSubmit = (values) => {
     const { quantity } = values;
     dispatch(addToCart({ ...product, quantity: quantity }));
+    dispatch(openToolTipCart());
   };
   return (
     <Box className={classes.root}>

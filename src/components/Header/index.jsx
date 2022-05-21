@@ -12,7 +12,7 @@ import { makeStyles } from '@mui/styles';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';
 import { useSelector, useDispatch } from 'react-redux';
-import { alpha, Badge, Menu, MenuItem, styled } from '@mui/material';
+import { alpha, Badge, Menu, MenuItem, styled, Tooltip } from '@mui/material';
 import { logout } from 'redux/action/userAction';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
@@ -20,6 +20,10 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import InputBase from '@mui/material/InputBase';
 import { useSnackbar } from 'notistack';
 import queryString from 'query-string';
+import { getTotalProduct } from 'redux/selectors/selectors';
+import { closeFormLogin, closeToolTipCart, openFormLogin } from 'redux/action/visibleAction';
+import AlertAddCart from './AlertAddCart';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 const useStyle = makeStyles((theme) => ({
   root: {},
   closeButton: {
@@ -79,22 +83,24 @@ const MODE = {
 };
 export default function Header() {
   const loggedInUser = useSelector((state) => state.userReducer.currentUser);
+  const showFormLogin = useSelector((state) => state.visibleReducer.showFormLogin);
+  const showToolTipCart = useSelector((state) => state.visibleReducer.showToolTipCart);
+  const totalProduct = useSelector(getTotalProduct);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
   const isLoggedIn = !!loggedInUser.id;
-  const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
   const [anchorEl, setAnchorEl] = useState(null);
   const refSearch = useRef();
 
   const handleClickOpen = () => {
-    setOpen(true);
+    dispatch(openFormLogin());
   };
 
   const handleClose = () => {
-    setOpen(false);
+    dispatch(closeFormLogin());
   };
   const handleCloseMenu = () => {
     setAnchorEl(null);
@@ -112,7 +118,6 @@ export default function Header() {
   };
 
   const handleSearch = () => {
-    // navigate('/products')
     const params = queryString.parse(location.search);
     const queryParmas = {
       ...params,
@@ -163,11 +168,48 @@ export default function Header() {
                 <AccountCircle />
               </IconButton>
             )}
-            <IconButton>
-              <Badge badgeContent={4} color="warning">
-                <ShoppingCartOutlinedIcon style={{ color: '#fff' }} />
-              </Badge>
-            </IconButton>
+            <ClickAwayListener onClickAway={() => dispatch(closeToolTipCart())}>
+              <Box component="span">
+                <Tooltip
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        position: 'relative',
+                        bgcolor: '#fff',
+                        color: '#000',
+                        borderRadius: '6px',
+                        boxShadow: '1px 1px 15px #b3b3b3',
+                        padding: '16px',
+                        '& .MuiTooltip-arrow': {
+                          color: '#fff',
+                          width: '18px',
+                          height: '12px',
+                          left: '-3px !important',
+                          marginTop: '-1.1em !important',
+                        },
+                      },
+                    },
+                  }}
+                  arrow
+                  placement="bottom-end"
+                  onClose={() => dispatch(closeToolTipCart())}
+                  open={showToolTipCart}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  title={<AlertAddCart />}
+                >
+                  <IconButton onClick={() => navigate('/cart')}>
+                    <Badge badgeContent={totalProduct} color="warning">
+                      <ShoppingCartOutlinedIcon style={{ color: '#fff' }} />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            </ClickAwayListener>
           </Box>
         </Toolbar>
       </AppBar>
@@ -194,7 +236,7 @@ export default function Header() {
 
       <Dialog
         disableEscapeKeyDown
-        open={open}
+        open={showFormLogin}
         onClose={(_, reason) => {
           if (reason !== 'backdropClick') {
             handleClose();

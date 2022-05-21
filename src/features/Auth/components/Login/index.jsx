@@ -14,7 +14,6 @@ function Login(props) {
     } catch (error) {
       enqueueSnackbar(error.message, { variant: 'error' });
     }
-    console.log('Form submit', values);
   };
   return (
     <div>

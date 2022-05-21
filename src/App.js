@@ -6,6 +6,10 @@ import ListPage from './features/Product/pages/ListPage';
 import DetailPage from './features/Product/pages/DetailPage';
 import Header from './components/Header';
 import Main from 'components/Main/Main';
+import CartFeature from 'features/Carts';
+import PrivateRoute from 'private/PrivateRoute';
+import SkeletonCart from './private/SkeletonCart';
+import MyAccount from 'features/Auth/components/MyAccount/MyAccount';
 const theme = createTheme();
 function App() {
   return (
@@ -17,6 +21,15 @@ function App() {
           <Route index element={<ListPage />} />
           <Route path=":productId/*" element={<DetailPage />} />
         </Route>
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute Skeleton={<SkeletonCart />}>
+              <CartFeature />
+            </PrivateRoute>
+          }
+        />
+        <Route path="my-account" element={<MyAccount />} />
       </Routes>
     </ThemeProvider>
   );

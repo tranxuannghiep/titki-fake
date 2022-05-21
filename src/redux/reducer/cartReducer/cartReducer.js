@@ -1,7 +1,14 @@
-import { ADD_TO_CART, REMOVE_TO_CART, UPDATE_TO_CART } from 'redux/types';
+import {
+  ADD_TO_CART,
+  REMOVE_TO_CART,
+  UPDATE_TO_CART,
+  REMOVE_MANY_TO_CART,
+  SET_ARRAY_ID,
+} from 'redux/types';
 
 const initState = {
   carts: [],
+  arrayId: [],
 };
 const cartReducer = (state = initState, action) => {
   switch (action.type) {
@@ -24,9 +31,16 @@ const cartReducer = (state = initState, action) => {
       }
     }
     case UPDATE_TO_CART: {
+      const idx = state.carts.findIndex((val) => val.id === action.payload.id);
+      if (idx === -1 || action.payload.quantity < 1) return { ...state };
+
       return {
         ...state,
-        carts: action.payload,
+        carts: [
+          ...state.carts.slice(0, idx),
+          { ...state.carts[idx], quantity: action.payload.quantity },
+          ...state.carts.slice(idx + 1),
+        ],
       };
     }
     case REMOVE_TO_CART: {
@@ -35,6 +49,19 @@ const cartReducer = (state = initState, action) => {
       return {
         ...state,
         carts: [...state.carts.slice(0, idx), ...state.carts.slice(idx + 1)],
+      };
+    }
+    case REMOVE_MANY_TO_CART: {
+      const newCarts = state.carts.filter((val) => !action.payload.includes(val.id));
+      return {
+        ...state,
+        carts: newCarts,
+      };
+    }
+    case SET_ARRAY_ID: {
+      return {
+        ...state,
+        arrayId: action.payload,
       };
     }
     default:

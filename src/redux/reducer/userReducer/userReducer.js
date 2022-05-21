@@ -1,7 +1,6 @@
-import StorageKeys from 'constant/storage-keys';
 import { LOGIN, LOGOUT, REGISTER } from 'redux/types';
 const initState = {
-  currentUser: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
+  currentUser: {},
   settings: {},
 };
 const userReducer = (state = initState, action) => {
@@ -19,8 +18,6 @@ const userReducer = (state = initState, action) => {
       };
     }
     case LOGOUT: {
-      localStorage.removeItem(StorageKeys.USER);
-      localStorage.removeItem(StorageKeys.TOKEN);
       return {
         ...state,
         currentUser: {},

@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
-import store from './redux/store';
+import store, { persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-          <App />
-        </SnackbarProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+            <App />
+          </SnackbarProvider>
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>
