@@ -313,7 +313,7 @@ function CartFeature() {
                         {user.name}
                       </Typography>
                       <Typography paddingLeft="10px" variant="body1">
-                        {user.phone}
+                        {`0${user.phone}`}
                       </Typography>
                     </Box>
                     <Typography variant="body2" style={{ opacity: 0.8, marginTop: '4px' }}>

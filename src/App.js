@@ -10,6 +10,7 @@ import CartFeature from 'features/Carts';
 import PrivateRoute from 'private/PrivateRoute';
 import SkeletonCart from './private/SkeletonCart';
 import MyAccount from 'features/Auth/components/MyAccount/MyAccount';
+import SkeletonMyAccount from 'private/SkeletonMyAccount';
 const theme = createTheme();
 function App() {
   return (
@@ -29,7 +30,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="my-account" element={<MyAccount />} />
+        <Route
+          path="my-account"
+          element={
+            <PrivateRoute Skeleton={<SkeletonMyAccount />}>
+              <MyAccount />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </ThemeProvider>
   );
