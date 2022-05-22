@@ -36,7 +36,7 @@ export default function MyAccount() {
   }, [districtCode]);
   const schema = yup.object().shape({
     name: yup.string().required('Please enter your name'),
-    phone: yup.number().required('Please enter your phone'),
+    phone: yup.number().required('Please enter your phone').typeError('Please enter a number'),
   });
   const form = useForm({
     defaultValues: {
