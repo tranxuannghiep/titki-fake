@@ -26,7 +26,7 @@ const MenuProps = {
 
 export default function SelectFiled(props) {
   const classes = useStyles();
-  const { form, name, disable, label, items } = props;
+  const { form, name, disable, label, items, onChangeCode } = props;
   const { control } = form;
   return (
     <Controller
@@ -40,13 +40,16 @@ export default function SelectFiled(props) {
             size="small"
             fullWidth
             MenuProps={MenuProps}
-            onChange={onChange}
+            onChange={(e) => {
+              if (onChangeCode) onChangeCode(e.target.value);
+              return onChange(e);
+            }}
             value={value}
             disabled={disable}
           >
             {items.map((item) => (
-              <MenuItem key={item} value={item}>
-                {item}
+              <MenuItem key={item.code} value={item.code}>
+                {item.name}
               </MenuItem>
             ))}
           </Select>

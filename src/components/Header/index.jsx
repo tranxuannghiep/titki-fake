@@ -18,7 +18,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import InputBase from '@mui/material/InputBase';
-import { useSnackbar } from 'notistack';
 import queryString from 'query-string';
 import { getTotalProduct } from 'redux/selectors/selectors';
 import { closeFormLogin, closeToolTipCart, openFormLogin } from 'redux/action/visibleAction';
@@ -89,7 +88,6 @@ export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { enqueueSnackbar } = useSnackbar();
   const isLoggedIn = !!loggedInUser.id;
   const [mode, setMode] = useState(MODE.LOGIN);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -113,7 +111,7 @@ export default function Header() {
     handleCloseMenu();
   };
   const handleAccountClick = () => {
-    enqueueSnackbar('Chức năng này chưa được cập nhật', { variant: 'info' });
+    navigate('/my-account');
     handleCloseMenu();
   };
 

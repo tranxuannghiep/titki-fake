@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER } from 'redux/types';
+import { LOGIN, LOGOUT, REGISTER, SET_CURRENT_USER } from 'redux/types';
 const initState = {
   currentUser: {},
   settings: {},
@@ -21,6 +21,12 @@ const userReducer = (state = initState, action) => {
       return {
         ...state,
         currentUser: {},
+      };
+    }
+    case SET_CURRENT_USER: {
+      return {
+        ...state,
+        currentUser: { ...state.currentUser, ...action.payload },
       };
     }
     default:

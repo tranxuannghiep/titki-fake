@@ -32,6 +32,7 @@
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.5",
     "slick-carousel": "^1.8.1",
+    "sub-vn": "0.0.2",
     "tss-react": "^3.6.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

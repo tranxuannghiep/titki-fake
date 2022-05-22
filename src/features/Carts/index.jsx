@@ -26,11 +26,19 @@ import {
 import { makeStyles } from '@mui/styles';
 import { formatPrice } from 'ultils';
 import { useSelector, useDispatch } from 'react-redux';
-import { arrayIdSelector, cartSelector, getTotalPrice } from 'redux/selectors/selectors';
+import {
+  arrayIdSelector,
+  cartSelector,
+  getDistrictByCode,
+  getProvinceByCode,
+  getTotalPrice,
+  getWardByCode,
+} from 'redux/selectors/selectors';
 import { STATIC_HOST, THUMBNAIL_PLACEHOLDER } from 'constant';
 import { removeManyToCart, removeToCart, setArrayId, updateToCart } from 'redux/action/cartAction';
 import { useState } from 'react';
 import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,7 +71,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CartFeature() {
+  const navigate = useNavigate();
   const carts = useSelector(cartSelector);
+  const user = useSelector((state) => state.userReducer.currentUser);
   const getPrice = useSelector(getTotalPrice);
   const arrayId = useSelector(arrayIdSelector);
   const dispatch = useDispatch();
@@ -292,13 +302,33 @@ function CartFeature() {
               <Box padding={2}>
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Typography variant="body2">Giao tới</Typography>
-                  <Button variant="text">Thay đổi</Button>
+                  <Button variant="text" onClick={() => navigate('/my-account')}>
+                    Thay đổi
+                  </Button>
                 </Box>
-                <Typography variant="body1">Trần Xuân Nghiệp</Typography>
-                <Typography variant="body2" style={{ opacity: 0.8, marginTop: '4px' }}>
-                  ngõ 58 ngách 31 hẻm 8 đường thanh bình- mộ lao- hà đông, Phường Mộ Lao, Quận Hà
-                  Đông, Hà Nội
-                </Typography>
+                {!!user.name ? (
+                  <>
+                    <Box display="flex" alignItems="center">
+                      <Typography paddingRight="10px" borderRight="1px solid #ccc" variant="body1">
+                        {user.name}
+                      </Typography>
+                      <Typography paddingLeft="10px" variant="body1">
+                        {user.phone}
+                      </Typography>
+                    </Box>
+                    <Typography variant="body2" style={{ opacity: 0.8, marginTop: '4px' }}>
+                      {`${user.address}, ${getWardByCode(user.ward)[0].name}, ${
+                        getDistrictByCode(user.district)[0].name
+                      }, ${getProvinceByCode(user.province)[0].name}`}
+                    </Typography>
+                  </>
+                ) : (
+                  <>
+                    <Button fullWidth onClick={() => navigate('/my-account')} variant="contained">
+                      Cập nhật thông tin
+                    </Button>
+                  </>
+                )}
               </Box>
             </Paper>
             <Paper elevation={0} style={{ margin: '10px 0 20px' }}>
